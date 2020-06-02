@@ -103,14 +103,14 @@ impl RequestTelemetry {
         id: Uuid,
         name: impl Into<String>,
         uri: Uri,
-        duration: Duration,
+        duration: StdDuration,
         response_code: impl Into<String>,
     ) -> Self {
         Self {
             id,
             name: name.into(),
             uri,
-            duration,
+            duration: duration.into(),
             response_code: response_code.into(),
             timestamp: time::now(),
             properties: Properties::default(),
