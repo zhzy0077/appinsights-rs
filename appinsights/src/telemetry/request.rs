@@ -98,6 +98,27 @@ impl RequestTelemetry {
         }
     }
 
+    /// Creates a new telemetry item for HTTP request with id.
+    pub fn new_request(
+        id: Uuid,
+        name: impl Into<String>,
+        uri: Uri,
+        duration: Duration,
+        response_code: impl Into<String>,
+    ) -> Self {
+        Self {
+            id,
+            name: name.into(),
+            uri,
+            duration,
+            response_code: response_code.into(),
+            timestamp: time::now(),
+            properties: Properties::default(),
+            tags: ContextTags::default(),
+            measurements: Measurements::default(),
+        }
+    }
+
     /// Returns custom measurements to submit with the telemetry item.
     pub fn measurements(&self) -> &Measurements {
         &self.measurements
