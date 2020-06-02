@@ -103,6 +103,32 @@ impl RemoteDependencyTelemetry {
         }
     }
 
+    /// Creates a new telemetry item.
+    pub fn new_dependency(
+        name: impl Into<String>,
+        dependency_type: impl Into<String>,
+        duration: StdDuration,
+        target: impl Into<String>,
+        result_code: impl Into<String>,
+        data: impl Into<String>,
+        success: bool,
+    ) -> Self {
+        Self {
+            id: Option::default(),
+            name: name.into(),
+            duration: duration.into(),
+            result_code: Some(result_code.into()),
+            success,
+            data: Some(data.into()),
+            dependency_type: dependency_type.into(),
+            target: target.into(),
+            timestamp: time::now(),
+            properties: Properties::default(),
+            tags: ContextTags::default(),
+            measurements: Measurements::default(),
+        }
+    }
+
     /// Returns custom measurements to submit with the telemetry item.
     pub fn measurements(&self) -> &Measurements {
         &self.measurements
